@@ -29,3 +29,20 @@ open class BrandCategory {
     @Column(name = "price")
     open var price: Int? = null
 }
+
+open class BrandCategoryDto(
+    open var id: Int? = null,
+    open var brandId: Int,
+    open var categoryId: Int,
+    open var price: Int? = null,
+) {
+    companion object {
+        fun fromDto(entity: BrandCategory): BrandCategoryDto {
+            return BrandCategoryDto(entity.id, entity.brandId!!, entity.categoryId!!, entity.price)
+        }
+    }
+
+    override fun toString(): String {
+        return "브랜드 카테고리 ID : $id, 브랜드 ID : $brandId, 카테고리 ID : $categoryId, 가격 : $price"
+    }
+}

@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface CategoryRepository : JpaRepository<Category, Int> {
     fun findAllBy(): List<Category>
+    fun findByType(type: String): Category?
 }

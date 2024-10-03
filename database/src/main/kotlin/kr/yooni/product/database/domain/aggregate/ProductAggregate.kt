@@ -74,4 +74,98 @@ class ProductAggregate(
         brandCategory.price = price
         brandCategoryRepository.save(brandCategory)
     }
+
+    fun findLowestPricedProduct(): LowestPriceProduct {
+
+        val lowestPriceProduct = LowestPriceProduct(
+            items = mutableListOf(),
+            total = 0
+        )
+        val categories = categoryRepository.findAllBy()
+
+        categories.forEach { category ->
+            // 해당 카테고리에서 모든 제품 조회
+            val productList = category.id?.let { categoryId ->
+                brandCategoryRepository.findAllByCategoryId(categoryId)
+            } ?: emptyList()
+
+            // 카테고리 내 최저가 상품 찾기
+            val minProduct = productList.minByOrNull { it.price ?: Int.MAX_VALUE }
+            // 최저가 상품이 있는 경우 처리
+            if (minProduct != null) {
+                val brand = minProduct.brandId?.let { brandRepository.findById(it).orElse(null) }
+                val categoryEntity = minProduct.categoryId?.let { categoryRepository.findById(it).orElse(null) }
+                val price = minProduct.price ?: 0
+
+                // 모든 정보가 있는 경우에만 추가
+                if (brand != null && categoryEntity != null) {
+                    lowestPriceProduct.items.add(
+                        Product(
+                            brandId = minProduct.brandId!!,
+                            brandName = brand.name ?: "Unknown",
+                            categoryId = minProduct.categoryId!!,
+                            categoryName = categoryEntity.type ?: "Unknown",
+                            price = price
+                        )
+                    )
+                    lowestPriceProduct.total += price
+                }
+            }
+        }
+
+        return lowestPriceProduct
+    }
+
+    fun findLowestPricedProductByBrand(brandId: Int): LowestPriceProductByBrand {
+        val brand = brandRepository.findById(brandId).orElseThrow { throw Exception() }
+        val brandName = brand.name ?: "Unknown"
+
+        val categories = categoryRepository.findAllBy()
+
+        val lowestPriceProductByBrand = LowestPriceProductByBrand(
+            brand = brandName,
+            categories = mutableListOf(),
+            totalPrice = 0
+        )
+
+        categories.forEach { category ->
+            val brandCategory = brandCategoryRepository.findByBrandIdAndCategoryId(brandId, category.id!!)
+            val price = brandCategory.price ?: 0
+
+            lowestPriceProductByBrand.categories.add(
+                CategoryPrice(
+                    category = category.type ?: "Unknown",
+                    price = price
+                )
+            )
+
+            lowestPriceProductByBrand.totalPrice += price
+        }
+
+        return lowestPriceProductByBrand
+    }
+
+    fun findMinMaxPriceByCategory(categoryName: String): CategoryPriceInfo? {
+        val category = categoryRepository.findByType(categoryName) ?: return null
+        val brandCategoryList = brandCategoryRepository.findAllByCategoryId(category.id!!)
+
+        val minProduct = brandCategoryList.minByOrNull { it.price ?: Int.MAX_VALUE } ?: return null
+        val maxProduct = brandCategoryList.maxByOrNull { it.price ?: Int.MIN_VALUE } ?: return null
+
+        return CategoryPriceInfo(
+            category = categoryName,
+            lowestPrice = listOf(
+                BrandPrice(
+                    brand = brandRepository.findById(minProduct.brandId!!).orElseThrow { throw Exception() }.name ?: "Unknown",
+                    price = minProduct.price ?: 0
+                )
+            ),
+            highestPrice = listOf(
+                BrandPrice(
+                    brand = brandRepository.findById(maxProduct.brandId!!).orElseThrow { throw Exception() }.name ?: "Unknown",
+                    price = maxProduct.price ?: 0
+                )
+            )
+        )
+    }
 }

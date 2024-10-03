@@ -18,7 +18,6 @@ class I18nMessageSourceConfig() : WebMvcConfigurer {
     @Bean
     fun messageSource(): MessageSource {
         val messageSource = ReloadableResourceBundleMessageSource()
-        // todo yml 파일로 뺄것
         messageSource.addBasenames("classpath:i18n/message")
         messageSource.setDefaultEncoding("UTF-8")
         messageSource.setCacheSeconds(60)
@@ -34,10 +33,8 @@ class I18nMessageSourceConfig() : WebMvcConfigurer {
     fun localeResolver(): LocaleResolver {
         val cookieLocaleResolver = CookieLocaleResolver("language")
         cookieLocaleResolver.setDefaultLocale(Locale.KOREAN)
-//        cookieLocaleResolver.setCookieName("language")
         return cookieLocaleResolver
     }
-    // = AcceptHeaderLocaleResolver().apply { defaultLocale = Locale.KOREAN }
 
     @Bean
     fun localeInterceptor(): LocaleChangeInterceptor = LocaleChangeInterceptor().apply {

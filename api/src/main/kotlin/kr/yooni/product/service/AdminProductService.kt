@@ -19,7 +19,6 @@ class AdminProductService(
         return productAggregate.findAllCategory()
     }
 
-    // 브랜드의 카테고리별 가격정보를 조회합니다.
     fun findCategoryPricesByBrand(brandId: Int): List<String> {
         return productAggregate.findBrandByAllCategoryAndPrice(brandId)
     }
@@ -38,7 +37,6 @@ class AdminProductService(
 
     fun deleteBrand(brandId: Int) {
         productAggregate.deleteBrand(brandId)
-        // 브랜드를 삭제합니다.
     }
 
     fun createCategory(categoryDto: CategoryDto) {

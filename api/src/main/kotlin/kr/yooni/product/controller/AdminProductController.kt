@@ -20,7 +20,6 @@ class AdminProductController(
     private val adminProductService: AdminProductService
 ) {
 
-    // 브랜드 관리
     @GetMapping("/brands")
     fun findBrandList(): Response<List<String>> {
         return Response.okFrom(adminProductService.findBrandList())
@@ -55,10 +54,10 @@ class AdminProductController(
     fun findCategoryList(): Response<List<String>> {
         return Response.okFrom(adminProductService.findCategoryList())
     }
-    // 카테고리 관리
+
     @PostMapping("/categories")
     fun createCategory(
-        @RequestBody @Validated categoryDto : CategoryCreationRequest,
+        @RequestBody @Validated categoryDto: CategoryCreationRequest,
     ): Response<List<String>> {
         adminProductService.createCategory(categoryDto)
         return Response.ok()
@@ -88,7 +87,6 @@ class AdminProductController(
         return Response.okFrom(adminProductService.findCategoryPricesByBrand(brandId))
     }
 
-    // 상품의 가격을 등록 및 수정
     @PutMapping("/{brandId}/{categoryId}")
     fun updatePrice(
         @PathVariable("brandId") brandId: Int,

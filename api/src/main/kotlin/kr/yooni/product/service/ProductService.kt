@@ -1,5 +1,8 @@
 package kr.yooni.product.service
 
+import kr.yooni.product.database.domain.aggregate.CategoryPriceInfo
+import kr.yooni.product.database.domain.aggregate.LowestPriceProduct
+import kr.yooni.product.database.domain.aggregate.LowestPriceProductByBrand
 import kr.yooni.product.database.domain.aggregate.ProductAggregate
 import org.springframework.stereotype.Service
 
@@ -16,11 +19,15 @@ class ProductService(
         return productAggregate.findAllCategory().joinToString()
     }
 
-    fun findBrandByCategoryPrice(): String {
-        return "Brand By Category Price"
+    fun findLowestPricedProduct(): LowestPriceProduct {
+        return productAggregate.findLowestPricedProduct()
     }
 
-    fun findBrandByAppCategoryPrice(): String {
-        return "Brand By App Category Price"
+    fun findLowestPricedProductByBrand(brandId: Int): LowestPriceProductByBrand {
+        return productAggregate.findLowestPricedProductByBrand(brandId)
+    }
+
+    fun findMinMaxPriceByCategory(categoryName: String): CategoryPriceInfo? {
+        return productAggregate.findMinMaxPriceByCategory(categoryName)
     }
 }

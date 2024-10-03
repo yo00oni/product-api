@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 interface BrandCategoryRepository : JpaRepository<BrandCategory, Int> {
     fun findAllByBrandId(brandId: Int): List<BrandCategory>
     fun findByBrandIdAndCategoryId(brandId: Int, categoryId: Int): BrandCategory
+    fun findAllByCategoryId(categoryId: Int): List<BrandCategory>
 }

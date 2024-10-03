@@ -6,7 +6,6 @@ import kr.yooni.product.common.http.ValidationMessage
 import kr.yooni.product.common.validation.ConstraintViolationWrappedException
 import kr.yooni.product.common.validation.ValidationWrapper
 import kr.yooni.product.common.validation.ValidationsDescriber
-import org.slf4j.LoggerFactory
 import org.springframework.beans.ConversionNotSupportedException
 import org.springframework.beans.TypeMismatchException
 import org.springframework.http.HttpStatus
@@ -28,17 +27,6 @@ import org.springframework.web.servlet.resource.NoResourceFoundException
 
 @RestControllerAdvice
 class GlobalMvcExceptionHandler {
-    val log = LoggerFactory.getLogger(this::class.java)
-
-//     @ExceptionHandler(UnexpectedTypeException::class)
-//     fun handleException(ex: UnexpectedTypeException): ResponseEntity<Response<String>> {
-//         ex.printStackTrace()
-//         ex.
-//         val e = ValidationWrapper.from(ex) ?: ConstraintViolationWrappedException()
-//
-//         return handleWrappedConstraintViolationException(e)
-//     }
-
     /**
      * Spring Validator에 의해서 발생되는 Validation 오류를 catch
      */
@@ -152,7 +140,7 @@ class GlobalMvcExceptionHandler {
         }
         val e = GlobalHttpException(
             code = responseMessage.code,
-            message = responseMessage.message ?: "페이지 를 찾을수 없어요",
+            message = responseMessage.message,
             httpStatus = status,
         )
 
