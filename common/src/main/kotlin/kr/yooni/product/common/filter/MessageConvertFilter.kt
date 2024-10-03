@@ -19,7 +19,6 @@ import org.springframework.web.util.ContentCachingRequestWrapper
 import org.springframework.web.util.ContentCachingResponseWrapper
 import java.nio.charset.StandardCharsets
 
-// TODO : FilterConfig 설정 주석처리로 미사용
 class MessageConvertFilter(private val messageSourceAccessor: MessageSourceAccessor) : Filter {
 
     private val log = LoggerFactory.getLogger(this::class.java)
@@ -47,7 +46,6 @@ class MessageConvertFilter(private val messageSourceAccessor: MessageSourceAcces
 
         val payload: String? = String(contentCachingResponseWrapper.contentAsByteArray)
 
-        // TODO: XML 응답 다 없어지면, 제거
         val responseBody = try {
             gson.fromJson(payload, Map::class.java)
         } catch (
