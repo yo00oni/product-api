@@ -30,9 +30,9 @@ local profile 을 사용하여 실행한다.
  $ ./gradlew api:bootRun --args='--spring.profiles.active=local'
 ```
 ### 3. API 테스트 방법
-http://localhost:18080/swagger-ui/index.html#/
+http://localhost:8080/swagger-ui/index.html#/
 ### 4. DB Data 확인방법
-http://localhost:18080/h2-console
+http://localhost:8080/h2-console
 
 
 ## 환경 정보 
