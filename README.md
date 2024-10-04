@@ -27,10 +27,10 @@
 ### 2. 테스트 실행 방법
 local profile 을 사용하여 실행한다.
 ```shell
- $ ./gradlew api:bootRun --args='--spring.profiles.active=local'
+ ./gradlew api:bootRun --args='--spring.profiles.active=local'
 ```
 ### 3. API 테스트 방법
-http://localhost:8080/swagger-ui/index.html#/
+http://localhost:18080/swagger-ui/index.html#/
 
 
 ## 환경 정보 
