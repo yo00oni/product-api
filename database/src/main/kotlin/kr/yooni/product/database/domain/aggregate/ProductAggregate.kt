@@ -1,6 +1,7 @@
 package kr.yooni.product.database.domain.aggregate
 
 import kr.yooni.product.database.domain.entity.Brand
+import kr.yooni.product.database.domain.entity.BrandCategoryDto
 import kr.yooni.product.database.domain.entity.BrandDto
 import kr.yooni.product.database.domain.entity.Category
 import kr.yooni.product.database.domain.entity.CategoryDto
@@ -16,24 +17,24 @@ class ProductAggregate(
     private val categoryRepository: CategoryRepository,
     private val brandCategoryRepository: BrandCategoryRepository,
 ) {
-    fun findAllBrands(): List<String> {
+    fun findAllBrands(): List<BrandDto> {
         return brandRepository.findAllBy().map {
             brand ->
-            BrandDto.fromDto(brand).toString()
+            BrandDto.fromDto(brand)
         }
     }
 
-    fun findAllCategory(): List<String> {
+    fun findAllCategory(): List<CategoryDto> {
         return categoryRepository.findAllBy().map {
             category ->
-            CategoryDto.fromDto(category).toString()
+            CategoryDto.fromDto(category)
         }
     }
 
-    fun findBrandByAllCategoryAndPrice(brandId: Int): List<String> {
+    fun findBrandByAllCategoryAndPrice(brandId: Int): List<BrandCategoryDto> {
         return brandCategoryRepository.findAllByBrandId(brandId).map {
             brandCategory ->
-            "카테고리 정보 : ${brandCategory.categoryId}, 가격 : ${brandCategory.price}"
+            BrandCategoryDto.fromDto(brandCategory)
         }
     }
 

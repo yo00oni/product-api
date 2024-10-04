@@ -3,6 +3,7 @@ package kr.yooni.product.service
 import kr.yooni.product.common.exception.GlobalHttpException
 import kr.yooni.product.common.http.Response
 import kr.yooni.product.database.domain.aggregate.ProductAggregate
+import kr.yooni.product.database.domain.entity.BrandCategoryDto
 import kr.yooni.product.database.domain.entity.BrandDto
 import kr.yooni.product.database.domain.entity.CategoryDto
 import org.springframework.stereotype.Service
@@ -11,15 +12,15 @@ import org.springframework.stereotype.Service
 class AdminProductService(
     private val productAggregate: ProductAggregate,
 ) {
-    fun findBrandList(): List<String> {
+    fun findBrandList(): List<BrandDto> {
         return productAggregate.findAllBrands()
     }
 
-    fun findCategoryList(): List<String> {
+    fun findCategoryList(): List<CategoryDto> {
         return productAggregate.findAllCategory()
     }
 
-    fun findCategoryPricesByBrand(brandId: Int): List<String> {
+    fun findCategoryPricesByBrand(brandId: Int): List<BrandCategoryDto> {
         return productAggregate.findBrandByAllCategoryAndPrice(brandId)
     }
 

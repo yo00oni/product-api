@@ -10,15 +10,6 @@ import org.springframework.stereotype.Service
 class ProductService(
     private val productAggregate: ProductAggregate
 ) {
-
-    fun findBrandList(): String {
-        return productAggregate.findAllBrands().joinToString()
-    }
-
-    fun findCategoryList(): String {
-        return productAggregate.findAllCategory().joinToString()
-    }
-
     fun findLowestPricedProduct(): LowestPriceProduct {
         return productAggregate.findLowestPricedProduct()
     }

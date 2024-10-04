@@ -3,6 +3,9 @@ package kr.yooni.product.controller
 import com.fasterxml.jackson.databind.ObjectMapper
 import kr.yooni.product.data.BrandCreationRequest
 import kr.yooni.product.data.CategoryCreationRequest
+import kr.yooni.product.database.domain.entity.BrandCategoryDto
+import kr.yooni.product.database.domain.entity.BrandDto
+import kr.yooni.product.database.domain.entity.CategoryDto
 import kr.yooni.product.service.AdminProductService
 import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito.given
@@ -29,14 +32,24 @@ class AdminProductControllerTest {
 
     @Test
     fun `브랜드 목록 조회 테스트`() {
-        val brandList = listOf("BrandA", "BrandB")
+        val brandList = listOf(
+            BrandDto(
+                id = 1,
+                name = "BrandA"
+            ),
+            BrandDto(
+                id = 2,
+                name = "BrandB"
+            )
+        )
+
         given(adminProductService.findBrandList()).willReturn(brandList)
 
         mockMvc.perform(get("/v1/admin/products/brands"))
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.data").isArray)
-            .andExpect(jsonPath("$.data[0]").value("BrandA"))
-            .andExpect(jsonPath("$.data[1]").value("BrandB"))
+            .andExpect(jsonPath("$.data[0].name").value("BrandA"))
+            .andExpect(jsonPath("$.data[1].name").value("BrandB"))
     }
 
     @Test
@@ -74,14 +87,24 @@ class AdminProductControllerTest {
 
     @Test
     fun `카테고리 목록 조회 테스트`() {
-        val categoryList = listOf("CategoryA", "CategoryB")
+        val categoryList = listOf(
+            CategoryDto(
+                id = 1,
+                type = "CategoryA"
+            ),
+            CategoryDto(
+                id = 2,
+                type = "CategoryB"
+            )
+        )
+
         given(adminProductService.findCategoryList()).willReturn(categoryList)
 
         mockMvc.perform(get("/v1/admin/products/categories"))
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.data").isArray)
-            .andExpect(jsonPath("$.data[0]").value("CategoryA"))
-            .andExpect(jsonPath("$.data[1]").value("CategoryB"))
+            .andExpect(jsonPath("$.data[0].type").value("CategoryA"))
+            .andExpect(jsonPath("$.data[1].type").value("CategoryB"))
     }
 
     @Test
@@ -119,14 +142,27 @@ class AdminProductControllerTest {
 
     @Test
     fun `브랜드별 카테고리 가격 조회 테스트`() {
-        val categoryPrices = listOf("CategoryA: 1000", "CategoryB: 2000")
+        val categoryPrices = listOf(
+            BrandCategoryDto(
+                id = 1,
+                brandId = 1,
+                categoryId = 2,
+                price = 1000
+            ),
+            BrandCategoryDto(
+                id = 2,
+                brandId = 1,
+                categoryId = 3,
+                price = 4000
+            ),
+        )
         given(adminProductService.findCategoryPricesByBrand(1)).willReturn(categoryPrices)
 
         mockMvc.perform(get("/v1/admin/products/1/category-prices"))
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.data").isArray)
-            .andExpect(jsonPath("$.data[0]").value("CategoryA: 1000"))
-            .andExpect(jsonPath("$.data[1]").value("CategoryB: 2000"))
+            .andExpect(jsonPath("$.data[0].price").value("1000"))
+            .andExpect(jsonPath("$.data[1].price").value("4000"))
     }
 
     @Test

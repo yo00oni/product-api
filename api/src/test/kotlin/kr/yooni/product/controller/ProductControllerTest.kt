@@ -27,28 +27,6 @@ class ProductControllerTest {
     private lateinit var productService: ProductService
 
     @Test
-    fun `브랜드 목록 조회 테스트`() {
-        val brandList = "BrandA, BrandB"
-        given(productService.findBrandList()).willReturn(brandList)
-
-        mockMvc.perform(get("/v1/products/brands"))
-            .andExpect(status().isOk)
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.data").value(brandList))
-    }
-
-    @Test
-    fun `카테고리 목록 조회 테스트`() {
-        val categoryList = "CategoryA, CategoryB"
-        given(productService.findCategoryList()).willReturn(categoryList)
-
-        mockMvc.perform(get("/v1/products/cateogries"))
-            .andExpect(status().isOk)
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.data").value(categoryList))
-    }
-
-    @Test
     fun `최저가 상품 정보 조회 테스트`() {
 
         val product1 = Product(

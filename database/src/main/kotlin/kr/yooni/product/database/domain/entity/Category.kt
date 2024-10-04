@@ -8,9 +8,11 @@ import jakarta.persistence.Id
 import jakarta.persistence.Table
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
+import org.hibernate.annotations.DynamicUpdate
 
 @Entity
 @Table(name = "category")
+@DynamicUpdate
 open class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

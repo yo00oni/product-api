@@ -3,6 +3,9 @@ package kr.yooni.product.controller
 import kr.yooni.product.common.http.Response
 import kr.yooni.product.data.BrandCreationRequest
 import kr.yooni.product.data.CategoryCreationRequest
+import kr.yooni.product.database.domain.entity.BrandCategoryDto
+import kr.yooni.product.database.domain.entity.BrandDto
+import kr.yooni.product.database.domain.entity.CategoryDto
 import kr.yooni.product.service.AdminProductService
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -26,7 +29,7 @@ class AdminProductController(
 ) {
 
     @GetMapping("/brands")
-    fun findBrandList(): Response<List<String>> {
+    fun findBrandList(): Response<List<BrandDto>> {
         return Response.okFrom(adminProductService.findBrandList())
     }
 
@@ -56,7 +59,7 @@ class AdminProductController(
     }
 
     @GetMapping("/categories")
-    fun findCategoryList(): Response<List<String>> {
+    fun findCategoryList(): Response<List<CategoryDto>> {
         return Response.okFrom(adminProductService.findCategoryList())
     }
 
@@ -88,7 +91,7 @@ class AdminProductController(
     @GetMapping("/{brandId}/category-prices")
     fun findCategoryPricesByBrand(
         @PathVariable("brandId") brandId: Int,
-    ): Response<List<String>> {
+    ): Response<List<BrandCategoryDto>> {
         return Response.okFrom(adminProductService.findCategoryPricesByBrand(brandId))
     }
 
