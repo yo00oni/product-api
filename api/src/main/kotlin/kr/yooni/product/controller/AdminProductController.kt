@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+/**
+ * 운영자에게 브랜드, 카테고리, 상품의 가격을 관리 할수 있는 API 제공합니다.
+ *1. 운영자는 새로운 브랜드를 등록하고, 모든 브랜드의 상품을 추가, 변경, 삭제할 수 있어야 합니다.
+ *
+ */
 @RestController
 @RequestMapping("/v1/admin/products")
 class AdminProductController(
@@ -82,7 +87,7 @@ class AdminProductController(
 
     @GetMapping("/{brandId}/category-prices")
     fun findCategoryPricesByBrand(
-        @PathVariable ("brandId") brandId: Int,
+        @PathVariable("brandId") brandId: Int,
     ): Response<List<String>> {
         return Response.okFrom(adminProductService.findCategoryPricesByBrand(brandId))
     }
