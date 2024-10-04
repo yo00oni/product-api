@@ -1,4 +1,4 @@
-create table brand
+create table IF NOT EXISTS brand
 (
     id   int auto_increment comment '브랜드 고유 ID'
         primary key,
@@ -7,7 +7,7 @@ create table brand
         unique (name)
 );
 
-create table category
+create table IF NOT EXISTS category
 (
     id   int auto_increment comment '상품 카테고리 고유키',
     type varchar(20) not null,
@@ -16,7 +16,7 @@ create table category
         unique (type)
 );
 
-create table brand_category
+create table IF NOT EXISTS brand_category
 (
     id          int auto_increment comment '브랜드의 상품 카테고리별 Key'
         primary key,
