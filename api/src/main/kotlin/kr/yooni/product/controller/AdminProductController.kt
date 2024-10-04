@@ -82,7 +82,7 @@ class AdminProductController(
 
     @GetMapping("/{brandId}/category-prices")
     fun findCategoryPricesByBrand(
-        @PathVariable("brandId") brandId: Int,
+        @PathVariable ("brandId") brandId: Int,
     ): Response<List<String>> {
         return Response.okFrom(adminProductService.findCategoryPricesByBrand(brandId))
     }

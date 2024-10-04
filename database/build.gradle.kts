@@ -15,10 +15,10 @@ tasks.withType<BootJar> {
 }
 
 dependencies {
-//    runtimeOnly("com.h2database:h2")
+    runtimeOnly("com.h2database:h2")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.hibernate:hibernate-spatial:5.6.10.Final")
-    runtimeOnly("org.mariadb.jdbc:mariadb-java-client:2.7.5")
+//    runtimeOnly("org.mariadb.jdbc:mariadb-java-client:2.7.5")
 }
 
 allOpen {

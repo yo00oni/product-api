@@ -33,7 +33,7 @@ class ProductAggregate(
     fun findBrandByAllCategoryAndPrice(brandId: Int): List<String> {
         return brandCategoryRepository.findAllByBrandId(brandId).map {
             brandCategory ->
-            "브랜드+카테고리ID : ${brandCategory.categoryId} , 가격 : ${brandCategory.price}"
+            "카테고리 정보 : ${brandCategory.categoryId}, 가격 : ${brandCategory.price}"
         }
     }
 
@@ -43,6 +43,7 @@ class ProductAggregate(
         brandRepository.save(entity)
     }
 
+    @Transactional
     fun updateBrand(brandId: Int, brandName: String) {
         val brand = brandRepository.findById(brandId).orElseThrow { throw Exception() }
         brand.name = brandName
@@ -59,6 +60,7 @@ class ProductAggregate(
         categoryRepository.save(entity)
     }
 
+    @Transactional
     fun updateCategory(categoryId: Int, categoryType: String) {
         val category = categoryRepository.findById(categoryId).orElseThrow { throw Exception() }
         category.type = categoryType
@@ -69,6 +71,7 @@ class ProductAggregate(
         categoryRepository.deleteById(categoryId)
     }
 
+    @Transactional
     fun updatePrice(brandId: Int, categoryId: Int, price: Int) {
         val brandCategory = brandCategoryRepository.findByBrandIdAndCategoryId(brandId, categoryId)
         brandCategory.price = price

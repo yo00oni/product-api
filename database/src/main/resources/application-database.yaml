@@ -3,26 +3,33 @@ spring:
   config:
     activate:
       on-profile: local
-#  h2:
-#    console:
-#      enabled: true
+  h2:
+    console:
+      enabled: true
   datasource:
-    url: jdbc:mariadb://127.0.0.1:3306/domain_db?fastConnect=true&tcpNoDelay=true&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&sessionVariables=@@session.net_write_timeout=7200
-    driver-class-name: org.mariadb.jdbc.Driver
-    username: cst_usr
-    password: password
-## h2 database
-#        url: jdbc:h2:mem:testdb
-#        driver-class-name: org.h2.Driver
-#        username: sa
-#        password: password
+    #    url: jdbc:mariadb://127.0.0.1:3306/domain_db?fastConnect=true&tcpNoDelay=true&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&sessionVariables=@@session.net_write_timeout=7200
+#    driver-class-name: org.mariadb.jdbc.Driver
+#    username: cst_usr
+#    password: password
+# h2 database
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
   jpa:
     show-sql: true
     properties:
       hibernate:
         format_sql: true
+    hibernate:
+      ddl-auto: create
   jackson:
     property-naming-strategy: LOWER_CAMEL_CASE
   output:
     ansi:
       enabled: always
+  sql:
+    init:
+      schema-locations: classpath:/schema.sql
+      data-locations: classpath:/data.sql

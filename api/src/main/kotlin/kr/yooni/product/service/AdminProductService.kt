@@ -24,15 +24,19 @@ class AdminProductService(
     }
 
     fun createBrand(brandDto: BrandDto) {
-        try {
+        kotlin.runCatching {
             productAggregate.createBrand(brandDto)
-        } catch (e: Exception) {
+        }.onFailure { exception ->
             throw GlobalHttpException(Response.ResponseCode.DUPLICATED_DATA)
         }
     }
 
     fun updateBrand(brandId: Int, brandName: String) {
-        productAggregate.updateBrand(brandId, brandName)
+        kotlin.runCatching {
+            productAggregate.updateBrand(brandId, brandName)
+        }.onFailure { exception ->
+            throw GlobalHttpException(Response.ResponseCode.NOT_FOUND)
+        }
     }
 
     fun deleteBrand(brandId: Int) {
@@ -40,11 +44,19 @@ class AdminProductService(
     }
 
     fun createCategory(categoryDto: CategoryDto) {
-        productAggregate.createCategory(categoryDto)
+        kotlin.runCatching {
+            productAggregate.createCategory(categoryDto)
+        }.onFailure { exception ->
+            throw GlobalHttpException(Response.ResponseCode.DUPLICATED_DATA)
+        }
     }
 
     fun updateCategory(categoryId: Int, categoryType: String) {
-        productAggregate.updateCategory(categoryId, categoryType)
+        kotlin.runCatching {
+            productAggregate.updateCategory(categoryId, categoryType)
+        }.onFailure { exception ->
+            throw GlobalHttpException(Response.ResponseCode.NOT_FOUND)
+        }
     }
 
     fun deleteCategory(categoryId: Int) {
@@ -52,6 +64,10 @@ class AdminProductService(
     }
 
     fun updatePrice(brandId: Int, categoryId: Int, price: Int) {
-        productAggregate.updatePrice(brandId, categoryId, price)
+        kotlin.runCatching {
+            productAggregate.updatePrice(brandId, categoryId, price)
+        }.onFailure { exception ->
+            throw GlobalHttpException(Response.ResponseCode.NOT_FOUND)
+        }
     }
 }
